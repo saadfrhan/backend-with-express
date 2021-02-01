@@ -2,6 +2,10 @@ const express = require('express');
 const { addNewBook, getAllBooks } = require('./library');
 const app = express();
 const port = 3000;
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
 
 app.get("/", (req, res) => {
     console.log(`Reveived request at ` + Date());
@@ -18,8 +22,14 @@ app.get("/add", (req, res) => {
     </button>`)
 })
 
-app.get("/add-book-success", (req, res) => {
-    addNewBook({ ...req.query, id: Date.now(), author: getRandomAuthor() })
+app.post("/add-book-success", (req, res) => {
+    let newBook = {
+        bookName: req.body.bookName,
+        lang: req.body.lang,
+        id: Date.now(),
+        author: getRandomAuthor()
+    }
+    addNewBook(newBook)
     res.send(`
     <h1>
         Your book has been registered.
@@ -43,7 +53,7 @@ app.get("/list-all-books", (req, res) => {
 
 app.get("/add-new-book", (req, res) => {
     res.send(`
-    <form action="/add-book-success" method="get">
+    <form action="/add-book-success" method="post">
         <label>
             Bookname: <input type="text" name = "bookName" />
         </label>
