@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <script src="https://cdn.socket.io/3.1.1/socket.io.min.js"></script>
+
+  <title>Hello, world!</title>
+
+</head>
+<style>
+  .chat-messages-wrapper {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    padding: 20px;
+    background-color: bisque;
+  }
+
+  .message-list-wrapper {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .message-list-wrapper li {
+    border-bottom: 2px solid grey;
+    padding: 20px 5px;
+  }
+
+  .user-initials {
+    background-color: grey;
+    color: white;
+    padding: 10px;
+    border-radius: 200px;
+  }
+
+  .text-message {
+    padding-left: 20px;
+  }
+</style>
+
+<body>
+  <div class="chat-messages-list">
+    <ul class="list-group message-list-wrapper" id='list-group'>
+    </ul>
+  </div>
+
+  <div class="chat-messages-wrapper">
+    <input class="form-control form-control-lg" type="text" placeholder="Type your message here...."
+      aria-label=".form-control-lg example" onkeydown="sendMessagesToOtherPeople(event)" />
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+    crossorigin="anonymous"></script>
+
+  <script>
+    let initials = prompt('Please enter you initials here....')
+    let socket = io();
+
+    if (!initials) {
+      initials = 'AN'
+    }
+
+    function sendMessagesToOtherPeople(event) {
+      if (event.which === 13) {
+        let currentVal = event.target.value;
+        let dataSentToServer = { initials: initials, message: currentVal }
+        socket.emit('SEND_NEW_MESSAGE', dataSentToServer)
+        console.log(dataSentToServer)
+        renderMessagesList(dataSentToServer)
+        event.target.value = '';
+        event.target.focus();
+      }
+    }
+
+    function renderMessagesList(messageData) {
+
+      let wrapperUl = document.getElementById('list-group');
+      let initialsSpan = document.createElement('span')
+      initialsSpan.appendChild(document.createTextNode(messageData.initials))
+      initialsSpan.setAttribute('class', 'user-initials')
+
+      let messagesSpan = document.createElement('span')
+      messagesSpan.appendChild(document.createTextNode(messageData.message))
+      messagesSpan.setAttribute('class', 'text-message')
+
+      let wrapperListItem = document.createElement('li')
+
+      wrapperListItem.appendChild(initialsSpan)
+      wrapperListItem.appendChild(messagesSpan)
+
+      wrapperUl.appendChild(wrapperListItem)
+    }
+
+    socket.on('ON_NEW_MESSAGE_RECEIVED', (mData) => {
+      renderMessagesList(mData)
+    })
+  </script>
+</body>
+
+</html>
