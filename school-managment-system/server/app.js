@@ -13,7 +13,7 @@ app.use(cors())
 app.use('/subjects', subjectsRoutes)
 app.use('/students', studentRoutes)
 app.listen(port, (err) => {
-    if(err){
+    if (err) {
         console.log(`ERROR ${err}`)
         return;
     }

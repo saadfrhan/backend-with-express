@@ -26,17 +26,18 @@ function App() {
           <Link to="/subjects"><p>Create New Subject</p></Link>
         </Button>
         <Button variant="contained" color="primary">
-          <Link to="/students"><p>Create New Student</p></Link>
+          <Link to="/student"><p>Create New Student</p></Link>
         </Button>
         <Button variant="contained" color="primary">
           <Link to="/students-list"><p>See all Students</p></Link>
         </Button>
       </div>
       <Switch>
-        <Route path="/students">
+
+        <Route path="/student/:id?">
           <Students />
         </Route>
-
+      
         <Route path="/students-list">
           <ListOfAllStudents />
         </Route>

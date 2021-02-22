@@ -40,10 +40,10 @@ export default function ListOfAllStudents() {
     }
 
     const sendRequestToDeleteStudent = (id) => {
-        fetch(`${SETTINGS.server_base_url}/students/delete/${id}`, {method: 'delete'})
+        fetch(`${SETTINGS.server_base_url}/students/delete/${id}`, { method: 'delete' })
             .then(res => res.json())
             .then(studentList => {
-               getAllStudents()
+                getAllStudents()
             })
     }
     return <>
@@ -68,14 +68,14 @@ export default function ListOfAllStudents() {
                             <TableCell component="th" scope="row" align="center">{student.gender}</TableCell>
                             <TableCell component="th" scope="row" align="center">{student.class}</TableCell>
                             <TableCell component="th" scope="row" align="center">{student.subjects.join(', ')}</TableCell>
-                            <TableCell component="th" scope="row" align="center"><Link to={`/students/${student._id}`}>
+                            <TableCell component="th" scope="row" align="center">
                                 <IconButton aria-label="update">
-                                    <UpdateIcon className={classes.iconColor} />
+                                    <Link to={`/student/${student._id}`}>       <UpdateIcon className={classes.iconColor} /></Link>
                                 </IconButton>
-                            </Link></TableCell>
+                            </TableCell>
                             <TableCell component="th" scope="row" align="center">
                                 <IconButton aria-label="delete">
-                                    <DeleteIcon className={classes.iconColor} onClick={() => {sendRequestToDeleteStudent(student._id)} } />
+                                    <DeleteIcon className={classes.iconColor} onClick={() => { sendRequestToDeleteStudent(student._id) }} />
                                 </IconButton>
                             </TableCell>
                         </TableRow>
