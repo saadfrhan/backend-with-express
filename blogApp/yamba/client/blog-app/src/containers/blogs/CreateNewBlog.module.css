@@ -1,0 +1,9 @@
+.textArea{
+    border: none;
+    width: 97.9%;
+    font-family: 'Roboto', sans-serif;
+    font-size: inherit;
+    border: 1px solid rgba(0, 0, 0, 0.42) ;
+    border-radius: 5px;
+    padding: 10px;
+}
