@@ -1,5 +1,15 @@
 const blogModel = require('../blog/blogModel')
 
+module.exports.getListOfAllBlogs = (req, res) => {
+    blogModel.findAllMatchingBlogs({})
+        .then(foundDocumentsList => {
+            res.send({ status: true, found: true, list: foundDocumentsList._id })
+        })
+        .catch(error => {
+            res.send({ status: false, found: false, err: error })
+        })
+}
+
 module.exports.createNewBlog = (req, res) => {
 
     blogModel.insertBlogDetailsInDB(req.body)
@@ -9,5 +19,5 @@ module.exports.createNewBlog = (req, res) => {
         .catch(error => {
             res.send({ status: false, created: false })
         })
-        
+
 }

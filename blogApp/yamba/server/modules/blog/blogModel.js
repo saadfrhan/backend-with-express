@@ -1,3 +1,4 @@
+const { query } = require('express');
 const mongoose = require('mongoose')
 const BlogSchema = new mongoose.Schema({
     category: String,
@@ -22,4 +23,16 @@ module.exports.insertBlogDetailsInDB = (blogDetails) => {
         })
     })
 
+}
+
+module.exports.findAllMatchingBlogs = (query) => {
+    return new Promise((resolve, reject) => {
+        BlogModel.find(query, (err, docs) => {
+            if (err) {
+                console.log("error", err);
+                return reject(err)
+            }
+            resolve(docs)
+        })
+    })
 }
