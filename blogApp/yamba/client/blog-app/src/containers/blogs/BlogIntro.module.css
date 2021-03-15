@@ -1,0 +1,17 @@
+.intro{
+    width: 800px;
+    margin: 15px auto;
+    box-shadow: 10px 10px lightblue;
+}
+
+.title{
+    text-decoration: underline;
+    margin: 0;
+    margin-bottom: 5px;
+}
+
+.tagline{
+    margin-left: 20px;
+    color: lightcoral;
+    font-size: 20px;
+}

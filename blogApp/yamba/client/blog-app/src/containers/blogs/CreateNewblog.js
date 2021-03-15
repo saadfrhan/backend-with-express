@@ -51,8 +51,9 @@ function CreateNewBlog() {
                     setTitle('')
                     setBody('')
                     setTagline('')
+                } else {
+                    alert('ERROR')
                 }
-                alert('ERROR')
             })
             .catch(err => {
                 console.log(err)
@@ -60,7 +61,7 @@ function CreateNewBlog() {
 
     }
 
-    
+
 
     return (
         <>

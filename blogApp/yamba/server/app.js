@@ -1,16 +1,24 @@
-const bodyParser = require('body-parser');
 const express = require('express');
 const cors = require('cors');
+const userRoutes = require('./modules/users/userRoutes.js');
+const blogRoutes = require('./modules/blog/blog-routes');
+const dbHelper = require('./dpHelpers/dpHelper');
+const bodyParser = require('body-parser');
 const app = express();
 const port = 9000;
-const blogRoutes = require('./modules/blog/blog-routes');
-const { connectionWithDB } = require('./dpHelpers/dpHelper');
+const session = require('express-session');
+
+app.use(session({
+    secret: 'Hi', resave: false,
+    saveUninitialized: true
+}))
 
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 app.use('/blogs', blogRoutes)
+app.use('/users', userRoutes)
 
 app.listen(port, (err) => {
     if (err) {
@@ -18,5 +26,5 @@ app.listen(port, (err) => {
         return;
     }
     console.log("Server started....")
-    connectionWithDB();
+    dbHelper.connectionWithDB();
 })
