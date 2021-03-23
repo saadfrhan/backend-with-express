@@ -30,10 +30,16 @@ function CreateNewBlog() {
         'Books'
     ]
 
+
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
     const [tagline, setTagline] = useState('')
     const [category, setCategory] = useState('');
+    const [headerImage, setHeaderImage] = useState('');
+
+    let formData = new FormData();
+    formData.append("blogDetails", {category, title, tagline, body})
+    formData.append("headerImage", headerImage)
 
     let requestToSaveBlog = (e) => {
         e.preventDefault();
@@ -93,15 +99,18 @@ function CreateNewBlog() {
                 <br />
 
                 <label>
-                    <TextField value={title} id="standard-basic" onChange={(e) => { setTitle(e.target.value) }} label="Title" fullWidth />
+                    <TextField value={title} id="standard-basic" onChange={(e) => { setTitle(e.target.value) }} label="Title" fullWidth required />
                 </label>
 
                 <label>
-                    <TextField value={tagline} id="standard-basic" onChange={(e) => { setTagline(e.target.value) }} label="Tag line" fullWidth />
+                    <TextField value={tagline} id="standard-basic" onChange={(e) => { setTagline(e.target.value) }} label="Tag line" fullWidth required />
                 </label>
-
+                <label>
+                    Header Image: <br />
+                    <input value={headerImage} type="file" onChange={(e) => setHeaderImage(e.target.file(0))} required />
+                </label>
                 <label><br /><br />
-                    <TextareaAutosize value={body} onChange={(e) => { setBody(e.target.value) }} aria-label="empty textarea" rowsMin={15} placeholder="Enter the body" className={styles.textArea} />
+                    <TextareaAutosize value={body} onChange={(e) => { setBody(e.target.value) }} aria-label="empty textarea" rowsMin={15} placeholder="Enter the body" className={styles.textArea} required />
                 </label>
                 <Button fullWidth variant="contained" color="primary" type="submit">
                     Submit

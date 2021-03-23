@@ -174,20 +174,23 @@ const Students = () => {
                         </FormControl>
                     </div>
                     <br />
-                    {studentClass && allSubjects.filter(subject => subject.class == studentClass).map(subject => <FormControlLabel
-                        control={<Checkbox checked={subjects.includes(subject.name)} color="primary" onChange={(event) => {
-                            let previousState = [...subjects];
-                            if (event.target.checked) {
-                                previousState.push(subject.name)
-                            } else {
-                                let index = previousState.indexOf(subject.name)
-                                previousState.splice(index, 1)
-                            }
-                            console.log(previousState)
-                            setSubjects(previousState)
-                        }} />}
-                        label={`${subject.name}`} key={subject._id}
-                    />)}
+                    {studentClass && allSubjects
+                        .filter(subject =>
+                            subject.class == studentClass)
+                        .map(subject =>
+                            <FormControlLabel control={
+                                <Checkbox checked={subjects.includes(subject.name)} color="primary" onChange={(event) => {
+                                    let previousState = [...subjects];
+                                    if (event.target.checked) {
+                                        previousState.push(subject.name)
+                                    } else {
+                                        let index = previousState.indexOf(subject.name)
+                                        previousState.splice(index, 1)
+                                    }
+                                    setSubjects(previousState)
+                                }} />}
+                                label={`${subject.name}`} key={subject._id}
+                            />)}
 
                     {editingStudentId ?
                         <Button

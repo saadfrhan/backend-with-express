@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 9000;
 const session = require('express-session');
+var multer  = require('multer')
+var upload = multer({})
 
 app.use(session({
     secret: 'Hi', resave: false,
@@ -17,7 +19,7 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-app.use('/blogs', blogRoutes)
+app.use('/blogs', upload.single('headerImage'), blogRoutes)
 app.use('/users', userRoutes)
 
 app.listen(port, (err) => {

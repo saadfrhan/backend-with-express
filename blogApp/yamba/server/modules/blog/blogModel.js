@@ -5,6 +5,7 @@ const BlogSchema = new mongoose.Schema({
     body: String,
     tagline: String,
     category: String,
+    headerImageURL = String,
     createdAt: { type: Date, default: Date.now }
 })
 
